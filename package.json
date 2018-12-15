@@ -1,0 +1,37 @@
+{
+  "name": "@hanyk/keep-route-view",
+  "version": "0.0.1",
+  "description": "vue 路由 push跳转缓存组件，back,replace 取消缓存",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "rollup -c",
+    "release": "npm run build && npm run pub",
+    "pub": "npm publish --access public"
+  },
+  "author": "51594176@qq.com",
+  "license": "MIT",
+  "keywords": [
+    "vue-router",
+    "keep-alive",
+    "vue"
+  ],
+  "homepage": "https://github.com/hyk51594176/keep-route-view",
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-plugin-component": "^1.1.1",
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-stage-2": "^6.24.1",
+    "change-case": "^3.0.2",
+    "create-banner": "^1.0.0",
+    "rollup": "^0.59.1",
+    "rollup-plugin-babel": "^3.0.7",
+    "rollup-plugin-eslint": "^5.0.0",
+    "rollup-plugin-uglify": "^3.0.0",
+    "rollup-plugin-vue": "^4.3.1",
+    "vue-template-compiler": "^2.5.16"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  }
+}
