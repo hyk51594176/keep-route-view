@@ -34,7 +34,7 @@ class Core {
       } else {
         to.matched.forEach(route => {
           const component = route.components.default
-          if (component.name && !component.noKeep && !this.routes.includes(component.name)) {
+          if (component.name && !component.noKeep && this.routes.indexOf(component.name) < 0) {
             this.routes.push(component.name)
           }
         })
