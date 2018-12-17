@@ -1,66 +1,68 @@
 
 class Core {
-  static contextMap = new Map()
-  static includeList = new Set()
-  static unWatch = null
-  static router = null
+  constructor(){
+    this.contextMap = new Map()
+    this.includeList = new Set()
+    this.unWatch = null
+    this.router = null
+  }
  
-  static bindVm (context) {
-    if (!Core.router) {
+  bindVm (context) {
+    if (!this.router) {
       if (!context.parent.$router) throw new Error('请在使用该组件前安装vueRouter')
-      Core.router = context.parent.$router
-      window.addEventListener('popstate', Core.directionChange.bind(Core, 'back'))
-      Core.init()
+      this.router = context.parent.$router
+      window.addEventListener('popstate', this.directionChange.bind(this, 'back'))
+      this.init()
     }
-    if (!Core.contextMap.has(context.parent)) {
-      Core.contextMap.set(context.parent, context)
-      context.parent.$on('hook:beforeDestroy', Core.unBindVm.bind(Core, context))
+    if (!this.contextMap.has(context.parent)) {
+      this.contextMap.set(context.parent, context)
+      context.parent.$on('hook:beforeDestroy', this.unBindVm.bind(this, context))
     }
   }
-  static init () {
+  init () {
     ;['push', 'replace', 'back'].forEach(key => {
-      let _method = Core.router[key].bind(Core.router)
-      Core.router[key] = (...args) => {
-        Core.directionChange(key)
+      let _method = this.router[key].bind(this.router)
+      this.router[key] = (...args) => {
+        this.directionChange(key)
         _method(...args)
       }
     })
-    Core.unWatch = Core.router.afterEach((to, from) => {
-      if (Core.direction === 'back' || Core.direction === 'replace') {
+    this.unWatch = this.router.afterEach((to, from) => {
+      if (this.direction === 'back' || this.direction === 'replace') {
         from.matched.forEach(route => {
           const name = route.components.default.name
-          if (Core.includeList.has(name)) Core.includeList.delete(name)
+          if (this.includeList.has(name)) this.includeList.delete(name)
         })
       } else {
         to.matched.forEach(route => {
           const component = route.components.default
-          if (component.name && !component.noKeep && !Core.includeList.has(component.name)) {
-            Core.includeList.add(component.name)
+          if (component.name && !component.noKeep && !this.includeList.has(component.name)) {
+            this.includeList.add(component.name)
           }
         })
       }
-      Core.includeChange()
+      this.includeChange()
     })
   }
-  static unBindVm (context) {
-    Core.contextMap.delete(context)
-    if (Core.contextMap.size === 0) {
-      Core.unWatch()
-      Core.router = null
-      Core.direction = ''
-      window.removeEventListener('popstate', Core.updateDirection.bind(Core))
+  unBindVm (context) {
+    this.contextMap.delete(context)
+    if (this.contextMap.size === 0) {
+      this.unWatch()
+      this.router = null
+      this.direction = ''
+      window.removeEventListener('popstate', this.updateDirection.bind(this))
     }
   }
-  static directionChange (key) {
-    Core.direction = key
-    Core.contextMap.forEach(context => {
+  directionChange (key) {
+    this.direction = key
+    this.contextMap.forEach(context => {
       context.listeners.change && context.listeners.change(key)
     })
   }
-  static includeChange () {
-    Core.contextMap.forEach(context => {
-      context.listeners.includeChange && context.listeners.includeChange([...(context.props.include || []), ...Core.includeList])
+  includeChange () {
+    this.contextMap.forEach(context => {
+      context.listeners.includeChange && context.listeners.includeChange([...(context.props.include || []), ...this.includeList])
     })
   }
 }
-export default Core
+export default new Core()
