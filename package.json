@@ -1,12 +1,12 @@
 {
   "name": "@hanyk/keep-route-view",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "vue 路由 push跳转缓存组件，back,replace 取消缓存",
   "main": "dist/index.js",
   "scripts": {
     "build": "rollup -c",
     "release": "npm run build && npm run pub",
-    "pub": "npm publish --access public"
+    "pub": "npm publish"
   },
   "author": "51594176@qq.com",
   "license": "MIT",
