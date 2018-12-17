@@ -18,6 +18,7 @@
   "homepage": "https://github.com/hyk51594176/keep-route-view",
   "devDependencies": {
     "@babel/core": "^7.2.2",
+    "@babel/plugin-proposal-class-properties": "^7.2.1",
     "@babel/preset-env": "^7.2.0",
     "rollup": "^0.68.0",
     "rollup-plugin-babel": "^4.1.0",

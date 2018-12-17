@@ -1,6 +1,7 @@
 
 import core from './core'
 export default {
+  functional: true,
   name: 'KeepRouteView',
   props: {
     include: [String, Array, RegExp],
@@ -8,42 +9,16 @@ export default {
     max: {
       type: Number,
       default: 10
-    },
-    name: [String]
-  },
-  data () {
-    return {
-      direction: '',
-      routes: []
     }
   },
-  watch: {
-    direction (val) {
-      this.$emit('change', val)
-    }
-  },
-  created () {
-    if (!this.$router) throw new Error('请在使用该组件前安装vueRouter')
-    const unBindVm = core.bindVm(this)
-    this.$once('hook:beforeDestroy', unBindVm)
-  },
-  computed: {
-    defaultInclude () {
-      if (this.include) return this.routes.concat(this.include)
-      return this.routes
-    }
-  },
-  render (h) {
+  render (h, context) {
+    core.bindVm(context)
+    const include = [...core.includeList, ...(context.props.include || [])]
     return h('keep-alive', {
       props: {
-        include: this.defaultInclude,
-        exclude: this.exclude,
-        max: this.max
+        ...context.props,
+        include
       }
-    }, [h('router-view', {
-      props: {
-        name: this.name
-      }
-    }), ...(this.$slots.default || [])])
+    }, [h('router-view', context.data, context.children)])
   }
 }

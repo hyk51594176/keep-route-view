@@ -1,8 +1,13 @@
 {
   "presets": [
-    ["@babel/preset-env", {
-      "loose": true,
-      "modules": false
+    ["@babel/preset-env",{
+      "modules": false,
+      "loose": false,
+      "include":[
+        "es6.map",
+        "es6.set"
+      ]
     }]
   ],
+  "plugins": ["@babel/plugin-proposal-class-properties"]
 }
