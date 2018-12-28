@@ -1,6 +1,6 @@
 
 class Core {
-  constructor(){
+  constructor () {
     this.contextMap = new Map()
     this.includeList = new Set()
     this.unWatch = null
@@ -8,7 +8,7 @@ class Core {
     this.direction = null
     this.stateKey = null
   }
- 
+
   bindVm (context) {
     if (!this.router) {
       if (!context.parent.$router) throw new Error('请在使用该组件前安装vueRouter')
@@ -57,13 +57,14 @@ class Core {
       window.removeEventListener('popstate', this.updateDirection.bind(this))
     }
   }
-  directionChange (key,e) {
+  directionChange (key, e) {
     this.direction = key
     if (e && e.state.key) {
-      if (!this.stateKey) this.stateKey = e.stateKey
+      debugger
+      if (!this.stateKey) this.stateKey = e.state.key
       else {
-        this.direction = e.stateKey < this.stateKey?'back':'forward'
-        this.stateKey = e.stateKey
+        this.direction = e.state.key < this.stateKey ? 'back' : 'forward'
+        this.stateKey = e.state.key
       }
     }
     this.contextMap.forEach(context => {
