@@ -27,6 +27,9 @@ class Core {
       this.router[key] = (...args) => {
         let name = key
         if (key === 'go' && args[0] < 0)name = 'back'
+        if (name !== 'back') {
+          this.stateKey && (this.stateKey += 1)
+        }
         this.directionChange(name)
         _method(...args)
       }
@@ -54,18 +57,11 @@ class Core {
       this.unWatch()
       this.router = null
       this.direction = ''
-      window.removeEventListener('popstate', this.updateDirection.bind(this))
+      window.removeEventListener('popstate', this.updateDirection.bind(this,'back'))
     }
   }
   directionChange (key, e) {
     this.direction = key
-    if (e && e.state.key) {
-      if (!this.stateKey) this.stateKey = e.state.key
-      else {
-        this.direction = e.state.key < this.stateKey ? 'back' : 'forward'
-        this.stateKey = e.state.key
-      }
-    }
     this.contextMap.forEach(context => {
       context.listeners.change && context.listeners.change(key)
     })
