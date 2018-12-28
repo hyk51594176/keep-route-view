@@ -63,6 +63,7 @@ class Core {
       if (!this.stateKey) this.stateKey = e.stateKey
       else {
         this.direction = e.stateKey < this.stateKey?'back':'forward'
+        this.stateKey = e.stateKey
       }
     }
     this.contextMap.forEach(context => {
