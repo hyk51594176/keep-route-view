@@ -1,5 +1,6 @@
 import babel from 'rollup-plugin-babel';
 import { uglify } from "rollup-plugin-uglify";
+import postcss from 'rollup-plugin-postcss';
 export default {
   input: 'src/index.js',
   output: {
@@ -10,6 +11,9 @@ export default {
     babel({
       exclude: 'node_modules/**',
       
+    }),
+    postcss({
+      extensions: ['.css']
     }),
     uglify()
   ],

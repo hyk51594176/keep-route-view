@@ -5,6 +5,7 @@ class Core {
     this.includeList = new Set()
     this.unWatch = null
     this.router = null
+    this.direction = null
   }
  
   bindVm (context) {
