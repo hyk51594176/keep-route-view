@@ -12,4 +12,7 @@ import keepRouteView from '@hanyk/keep-route-view'
 
 Vue.use(keepRouteView)
 ```
+```html
+<keep-route-view  transition/>
+```
  
