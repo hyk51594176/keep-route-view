@@ -60,7 +60,6 @@ class Core {
   directionChange (key, e) {
     this.direction = key
     if (e && e.state.key) {
-      debugger
       if (!this.stateKey) this.stateKey = e.state.key
       else {
         this.direction = e.state.key < this.stateKey ? 'back' : 'forward'
