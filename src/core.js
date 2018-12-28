@@ -6,6 +6,7 @@ class Core {
     this.unWatch = null
     this.router = null
     this.direction = null
+    this.stateKey = null
   }
  
   bindVm (context) {
@@ -21,10 +22,12 @@ class Core {
     }
   }
   init () {
-    ;['push', 'replace', 'back'].forEach(key => {
+    ;['push', 'replace', 'back', 'forward', 'go'].forEach(key => {
       let _method = this.router[key].bind(this.router)
       this.router[key] = (...args) => {
-        this.directionChange(key)
+        let name = key
+        if (key === 'go' && args[0] < 0)name = 'back'
+        this.directionChange(name)
         _method(...args)
       }
     })
@@ -54,8 +57,14 @@ class Core {
       window.removeEventListener('popstate', this.updateDirection.bind(this))
     }
   }
-  directionChange (key) {
+  directionChange (key,e) {
     this.direction = key
+    if (e && e.state.key) {
+      if (!this.stateKey) this.stateKey = e.stateKey
+      else {
+        this.direction = e.stateKey < this.stateKey?'back':'forward'
+      }
+    }
     this.contextMap.forEach(context => {
       context.listeners.change && context.listeners.change(key)
     })

@@ -1,6 +1,6 @@
 {
   "name": "@hanyk/keep-route-view",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "vue 路由 push跳转缓存组件，back,replace 取消缓存",
   "main": "dist/index.js",
   "scripts": {
