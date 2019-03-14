@@ -6,7 +6,6 @@ class Core {
     this.unWatch = null
     this.router = null
     this.direction = null
-    this.stateKey = null
   }
 
   bindVm (context) {
@@ -27,9 +26,6 @@ class Core {
       this.router[key] = (...args) => {
         let name = key
         if (key === 'go' && args[0] < 0)name = 'back'
-        if (name !== 'back') {
-          this.stateKey && (this.stateKey += 1)
-        }
         this.directionChange(name)
         _method(...args)
       }

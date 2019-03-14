@@ -9,7 +9,7 @@ export default {
     exclude: [String, Array, RegExp],
     max: {
       type: Number,
-      default: 10
+      default: 20
     },
     transition: Boolean,
     transitionOptions: {
