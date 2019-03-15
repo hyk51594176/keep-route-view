@@ -57,10 +57,12 @@ class Core {
     }
   }
   directionChange (key, e) {
-    this.direction = key
-    this.contextMap.forEach(context => {
-      context.listeners.change && context.listeners.change(key)
-    })
+    if (this.direction !== key) {
+      this.direction = key
+      this.contextMap.forEach(context => {
+        context.listeners.change && context.listeners.change(key)
+      })
+    }
   }
   includeChange () {
     this.contextMap.forEach(context => {
